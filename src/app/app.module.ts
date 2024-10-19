@@ -7,6 +7,7 @@ import { ArtistComponent } from './artist/artist.component';
 import { AlbumComponent } from './album/album.component';
 import { SongComponent } from './song/song.component';
 import { ShowComponent } from './show/show.component';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [				
@@ -20,7 +21,7 @@ import { ShowComponent } from './show/show.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
