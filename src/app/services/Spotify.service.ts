@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Artist } from '../models/artist';
 import { Album } from '../models/album';
+import { Song } from '../models/song';
 
 const CLIENT_ID="2a7d388d575c455fabfae534c118600f";
 const CLIENT_SECRET="475e11461a72497b901e9bfc30bad713";
@@ -42,6 +43,8 @@ console.log(x);
 return new Artist(x.artists.items[0].id, x.artists.items[0].name, x.artists.items[0].images[0].url);
 } 
 
+/* Obtenir les albums d’un artiste */
+
 async getAlbums(artist : Artist): Promise<any> {
 
   const httpOptions = {
@@ -61,6 +64,24 @@ async getAlbums(artist : Artist): Promise<any> {
    }
    return albums;
   }
+
+
+  async getSongs(album: Album): Promise<Song[]> {
+     const httpOptions = {
+     headers: new HttpHeaders({
+     'Content-Type': 'application/json',
+     'Authorization': 'Bearer ' + this.spotifyToken
+     })
+     };
+     let x = await lastValueFrom(this.http.get<any>("https://api.spotify.com/v1/albums/" + album.id, httpOptions));
+     console.log(x);
+     
+     let songs : Song[] = [];
+     for(let i = 0; i < x.tracks.items.length; i++){
+     songs.push(new Song (x.tracks.items[i].id, x.tracks.items[i].name));
+     }
+     return songs;
+    }
   
 
 }
