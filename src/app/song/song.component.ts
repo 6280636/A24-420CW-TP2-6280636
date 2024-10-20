@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GoogleService } from '../services/google.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { Album } from '../models/album';
+import { SpotifyService } from '../services/Spotify.service';
+import { Song } from '../models/song';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-song',
@@ -8,18 +12,39 @@ import { SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./song.component.css']
 })
 export class SongComponent implements OnInit {
+album ?: Album;
+tabSongs: Song[] = [];
+  /* @Input()  album!: Album; */
+  /* videoSearchText : string = "";*/
+videoId : string = "";
+  /*videoUrl ?: SafeResourceUrl; */
 
-  videoSearchText : string = "";
-  videoId : string = "";
-  videoUrl ?: SafeResourceUrl;
+constructor(public httpService : SpotifyService, public route: ActivatedRoute,
+      public google : GoogleService) { }
 
-  constructor(public google : GoogleService) { }
-
-  ngOnInit() {
+ngOnInit() {
+  const albumId = this.route.snapshot.paramMap.get('id');
+  if(albumId){
+  this.loadSongs(albumId)
   }
+}
+async loadSongs(albumId: string){
+  const album = new Album(albumId, "", "");
+  try {
+      this.tabSongs = await this.httpService.getSongs(album);
+      console.log(this.tabSongs); // Verifica aquí si está recibiendo datos
+        } catch (error) {
+      console.error('Error loading songs:', error);
+        }
+    }
 
-  async searchVideo(): Promise <void>{
-    this.videoId = await this.google.searchVideoId(this.videoSearchText); // Obtenir l'id d'une vidéo
-   this.videoUrl= this.google.getSafeUrl(this.videoId); // Obtenir l'URL de la vidéo "sanitizé". La vidéo sera automatiquement affichée dans la page après.
-  }
+  async serarchVideo(song : Song):Promise<void> {
+    try{
+    this.videoId = await this.google.searchVideoId(song.name);
+    console.log(this.videoId);
+    }catch(error) {
+      console.error('Error searching for video:', error);
+    }
+  }  
+ 
 }

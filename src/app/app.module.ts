@@ -10,6 +10,7 @@ import { ShowComponent } from './show/show.component';
 import { provideHttpClient } from '@angular/common/http';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { FormsModule } from '@angular/forms';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
   declarations: [				
@@ -17,13 +18,16 @@ import { FormsModule } from '@angular/forms';
       ArtistComponent,
       AlbumComponent,
       SongComponent,
-      ShowComponent
+      ShowComponent,
+      
    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    YouTubePlayerModule
+    
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent]

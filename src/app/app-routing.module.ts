@@ -8,9 +8,11 @@ import { SongComponent } from './song/song.component';
 const routes: Routes = [
   {path: "", redirectTo:"/artist", pathMatch: "full"},
   {path: "artist", component: ArtistComponent},
-  {path: "album", component: AlbumComponent},
+  /* {path: "album", component: AlbumComponent}, */
+  { path: "album/:id", component: AlbumComponent },
   {path: 'show', component: ShowComponent },
-  {path: "song", component: SongComponent} 
+  /* {path: "song", component: SongComponent} */
+  {path: "song/:id", component: SongComponent}
 ];
 
 @NgModule({

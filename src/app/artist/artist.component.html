@@ -1,17 +1,11 @@
+
 <div class="row">
 <div class="search">
     <h3>Ajouter un artiste</h3>
     <form>
         <input type="text" [(ngModel)]= "artistName" name="artistName" placeholder="Nana Mouskouri">
         <button (click)="getArtist()" class="btn btn-light">Rechercher</button>
-    </form>
-    <!--
-    <div *ngIf="artist != undefined">        
-        <p>Nom : {{artist!.name}}</p>
-        <img width="230" [src]="artist!.imageUrl" [alt]="artist!.name">
-        <button (click) = "addArtiste()">Ajouter</button>
-      </div>
-      -->
+    </form>   
 </div>
 <div class="display">
     <h3>Vos artistes</h3>
@@ -21,30 +15,10 @@
         <div *ngFor="let artist of tabArtistes">
             <h4>{{ artist.name }}</h4>
             <img [src]="artist.imageUrl" [alt]="artist.name">
-        <button [routerLink]="['/album']">Albums</button>
-        <button [routerLink]="['/show']">Concerts</button>
-
-
-           <!--  <img src="assets/images/artist.png" alt="Artiste 1">
-            <button [routerLink]="['/album']">Albums</button><button [routerLink]="['/show']">Concerts</button>
-        </div>
-        <div>
-            <h4>Artiste 2</h4>
-            <img src="assets/images/artist.png" alt="Artiste 2">
-            <button [routerLink]="['/album']">Albums</button><button [routerLink]="['/show']">Concerts</button>
-        </div>
-        <div>
-            <h4>Artiste 3</h4>
-            <img src="assets/images/artist.png" alt="Artiste 3">
-            <button [routerLink]="['/album']">Albums</button><button [routerLink]="['/show']">Concerts</button>
-        </div>
-        <div>
-            <h4>Artiste 4</h4>
-            <img src="assets/images/artist.png" alt="Artiste 4">
-            <button [routerLink]="['/album']">Albums</button><button [routerLink]="['/show']">Concerts</button>
-        </div> -->
-
+        <button [routerLink]="['/album',artist.id]">Albums</button>
+        <button [routerLink]="['/show']">Concerts</button> 
+        <button (click)="deleteArtist(artist.id)" class="btn btn-light">Delete</button>    
     </div>
 </div>
 </div>
-    
+
